@@ -1,0 +1,43 @@
+{
+  "@@locale": "ar",
+
+  "email": "البريد الإلكتروني",
+  "@email": {
+    "description": "تُستخدم لتسمية حقل إدخال البريد الإلكتروني."
+  },
+
+  "password": "كلمة المرور",
+  "@password": {
+    "description": "تُستخدم لتسمية حقل إدخال كلمة المرور."
+  },
+
+  "forgetpassword": "نسيت كلمة المرور؟",
+  "@forgetpassword": {
+    "description": "رابط إعادة تعيين كلمة المرور."
+  },
+
+  "login": "تسجيل الدخول",
+  "@login": {
+    "description": "نص على زر تسجيل الدخول."
+  },
+
+  "createAccount": "إنشاء حساب",
+  "@createAccount": {
+    "description": "نص على زر إنشاء حساب جديد."
+  },
+
+  "dontHaveAcount": "ليس لديك حساب؟",
+  "@dontHaveAcount": {
+    "description": "رسالة تظهر عندما لا يكون لدى المستخدم حساب."
+  },
+
+  "or": "أو",
+  "@or": {
+    "description": "نص يُستخدم بين طرق تسجيل الدخول."
+  },
+
+  "loginWithgoogle": "تسجيل الدخول باستخدام جوجل",
+  "@loginWithgoogle": {
+    "description": "زر لتسجيل الدخول باستخدام حساب جوجل."
+  }
+}

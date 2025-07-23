@@ -1,0 +1,48 @@
+{
+  "@@locale": "en",
+
+  "intro": "Description",
+  "@intro": {
+    "description": "This is the intro text to translate. It serves as a key-value pair."
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "Used to label the email input field."
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Used to label the password input field."
+  },
+
+  "forgetpassword": "Forget Password",
+  "@forgetpassword": {
+    "description": "Used for the link to reset the password."
+  },
+
+  "login": "Login",
+  "@login": {
+    "description": "Text on the login button."
+  },
+
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "Text on the create account button."
+  },
+
+  "dontHaveAcount": "Don't Have an Account?",
+  "@dontHaveAcount": {
+    "description": "Message shown when user doesn't have an account."
+  },
+
+  "or": "Or",
+  "@or": {
+    "description": "Text used between login methods."
+  },
+
+  "loginWithgoogle": "Login With Google",
+  "@loginWithgoogle": {
+    "description": "Button text to log in using Google."
+  }
+}
