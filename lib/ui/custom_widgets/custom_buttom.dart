@@ -33,9 +33,10 @@ class CustomButtom extends StatelessWidget {
           Flexible(
             child: Text(
               text,
+              
               style: Theme.of(
                 context,
-              ).textTheme.labelLarge?.copyWith(inherit: true,color: textColor),
+              ).textTheme.labelLarge?.copyWith(inherit: true, color: textColor),
               overflow: TextOverflow.ellipsis,
               softWrap: false,
             ),

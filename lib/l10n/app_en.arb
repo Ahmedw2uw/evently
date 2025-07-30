@@ -10,6 +10,11 @@
   "@email": {
     "description": "Used to label the email input field."
   },
+  "name": "Name",
+  "@name": {
+    "description": "used to lable name fild"
+  },
+
 
   "password": "Password",
   "@password": {

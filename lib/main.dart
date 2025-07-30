@@ -1,14 +1,23 @@
 import 'package:evently/ui/provider/language_provider.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
+import 'package:evently/ui/screens/login/login.dart';
+import 'package:evently/ui/screens/regester/regester.dart';
 import 'package:evently/ui/screens/splash/splash.dart';
 import 'package:evently/ui/utiliti/app_theem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 // import 'l10n/app_localizations.dart';
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); //* this til to flutter before create the app initilaze some thing
+  await Firebase.initializeApp(
+    //*to initalize app in firebase
+    options: DefaultFirebaseOptions.currentPlatform,
+  ); //* this to import file (DefaultFirebaseOptions)
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(), //* this provider control of themes
@@ -58,7 +67,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // arabic
       ],
-      home: Splash(), //* the inetial route
+      home: Login(), //* the inetial route
     );
   }
 }

@@ -5,12 +5,17 @@ class CustomTextFeild extends StatefulWidget {
   final String hint;
   final String? preFixIcon;
   final bool isPassword;
+  final int minmumLines;
+  final TextEditingController? controler;
 
   const CustomTextFeild({
     super.key,
     required this.hint,
     this.preFixIcon,
     this.isPassword = false,
+    this.minmumLines = 1,
+    this.controler,//* this to control of the text in te fealds 
+
   });
 
   @override
@@ -23,15 +28,19 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 55,
+      child: Expanded(
         child: TextField(
+          controller: widget.controler,//* this to control of the text that enterd in the feald+>used it in the uthentication
+          maxLines: widget.isPassword ? 1 : widget.minmumLines,
+          minLines: widget.minmumLines,
           decoration: InputDecoration(
+            
             hintText: widget.hint,
             hintStyle:
                 Theme.of(context)
                     .textTheme
                     .titleSmall, //* this used to acces in the theme class by contex =>text theme =>title small
+                   
             prefixIcon:
                 widget.preFixIcon == null
                     ? null

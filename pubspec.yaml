@@ -41,6 +41,9 @@ dependencies:
   animated_toggle_switch: ^0.8.5
   provider: ^6.1.5
   flutter_gen_runner: ^5.11.0
+  firebase_core: 3.15.2
+  firebase_auth: 5.7.0
+  cloud_firestore: 5.6.12
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +68,8 @@ flutter:
   assets:
     - assets/images/  
     - assets/images/svg/  
+    - assets/images/event_cards/  
+
 
 
   # For details regarding adding assets from package dependencies, see

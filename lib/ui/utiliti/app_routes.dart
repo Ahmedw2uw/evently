@@ -1,3 +1,4 @@
+import 'package:evently/ui/screens/add_event/add_event.dart';
 import 'package:evently/ui/screens/home/home.dart';
 import 'package:evently/ui/screens/login/login.dart';
 import 'package:evently/ui/screens/regester/regester.dart';
@@ -17,4 +18,9 @@ abstract final class AppRoutes {
   static Route get regester {
     return MaterialPageRoute(builder: (_) => Regester());
   } //* this to navigate to the regester page
+
+  static Route get addEvent {
+    return MaterialPageRoute(builder: (_) => AddEvent());
+  } //* this to navigate to the regester page
+  
 }

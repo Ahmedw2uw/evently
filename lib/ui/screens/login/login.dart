@@ -4,6 +4,9 @@ import 'package:evently/ui/provider/language_provider.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/utiliti/app_assets.dart';
 import 'package:evently/ui/utiliti/app_colors.dart';
+import 'package:evently/ui/utiliti/app_routes.dart';
+import 'package:evently/ui/utiliti/dialog_utility.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
@@ -17,6 +20,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController emailController =
+      TextEditingController(); //* there to control the login way
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     languageProvider = Provider.of(
@@ -72,6 +78,7 @@ class _LoginState extends State<Login> {
 
   Widget bildEmailTextFeald() {
     return CustomTextFeild(
+      controler: emailController, //* this to taick its value
       hint:
           AppLocalizations.of(
             context,
@@ -82,6 +89,7 @@ class _LoginState extends State<Login> {
 
   Widget bildPaswordTextFeald() {
     return CustomTextFeild(
+      controler: passwordController, //* this to taick its value
       hint:
           AppLocalizations.of(
             context,
@@ -116,7 +124,22 @@ class _LoginState extends State<Login> {
       width: double.infinity,
       child: CustomButtom(
         text: AppLocalizations.of(context)!.login,
-        onClick: () {},
+        onClick: () async {
+          showLoading(context);
+          try {
+            var userCredential = await FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+                  email: emailController.text,
+                  password: passwordController.text,
+                );
+            Navigator.push(context, AppRoutes.home);
+          } on FirebaseAuthException catch (ex) {
+            var message =
+                ex.message ?? "some thing went worning , pleas try again leter";
+            Navigator.pop(context);
+            showMessage(context, content: message, posButtonTitle: "ok");
+          }
+        },
         textColor: AppColors.white,
       ),
     );
@@ -131,7 +154,9 @@ class _LoginState extends State<Login> {
           style: TextTheme.of(context).labelMedium,
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, AppRoutes.regester);
+          },
           child: Text(
             AppLocalizations.of(context)!.createAccount,
             style: TextTheme.of(context).labelMedium!.copyWith(
