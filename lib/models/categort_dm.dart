@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:evently/ui/utiliti/app_assets.dart';
 
 class CategorytDm {
@@ -38,7 +36,7 @@ class CategorytDm {
     CategorytDm(
       title: "sport",
       image: AppAssets.sport,
-      background: AppAssets.sport,
+      background: AppAssets.spartBg,
     ),
     CategorytDm(
       title: "Birthday",
@@ -51,4 +49,23 @@ class CategorytDm {
       background: AppAssets.bearthdayBg,
     ),
   ];
+
+  static CategorytDm fromImagePath(String path) {
+    return homeCategories.firstWhere(
+      (category) => category.image == path || category.background == path,
+      orElse:
+          () => CategorytDm(
+            title: "Unknown",
+            image: AppAssets.allCategoris,
+            background: AppAssets.background,
+          ),
+    );
+  }
+
+  static CategorytDm fromTitle(String title) {
+    return homeCategories.firstWhere(
+      (cat) => cat.title.toLowerCase() == title.toLowerCase(),
+      orElse: () => homeCategories[0],
+    );
+  }
 }

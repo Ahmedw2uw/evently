@@ -1,3 +1,5 @@
+import 'package:evently/data/firestore_helpers.dart';
+import 'package:evently/models/user_dm.dart';
 import 'package:evently/ui/custom_widgets/custom_buttom.dart';
 import 'package:evently/ui/custom_widgets/custom_text_feild.dart';
 import 'package:evently/ui/provider/language_provider.dart';
@@ -132,6 +134,8 @@ class _LoginState extends State<Login> {
                   email: emailController.text,
                   password: passwordController.text,
                 );
+              UserDm.curentUser=await getUserFromFirestore(userCredential.user!.uid);  //* this to ge t the user by id
+
             Navigator.push(context, AppRoutes.home);
           } on FirebaseAuthException catch (ex) {
             var message =

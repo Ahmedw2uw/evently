@@ -1,3 +1,5 @@
+import 'package:evently/data/firestore_helpers.dart';
+import 'package:evently/models/user_dm.dart';
 import 'package:evently/ui/custom_widgets/custom_buttom.dart';
 import 'package:evently/ui/custom_widgets/custom_text_feild.dart';
 import 'package:evently/ui/provider/language_provider.dart';
@@ -97,13 +99,27 @@ class _RegesterState extends State<Regester> {
                     try {
                       //! this function (createUserWithEmailAndPassword) is return (user creditional)=> this have obgect with type user =>and contain email and id (this in fire base there is important )
 
-                    var userCredential=  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        //* this is a getter method to assin the email and passowr  in firebase
-                        email:
-                            emailController
-                                .text, //! the all error is handel in the firebase
-                        password: passwordController.text,
+                      var userCredential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                            //* this is a getter method to assin the email and passowr  in firebase
+                            email:
+                                emailController
+                                    .text, //! the all error is handel in the firebase
+                            password: passwordController.text,
+                          );
+                    UserDm.curentUser = UserDm(
+                        id:
+                            userCredential
+                                .user!
+                                .uid, //* this to get id of  the user auth
+                        name: userNameController.text,
+                        email: emailController.text,
+                        favorateEvents: []//*------
                       );
+                      addUserToFirestore(
+                        UserDm.curentUser!,
+                      ); //* this to add the user to firestore
+                      if (!context.mounted) return;
                       Navigator.pop(context); //! this lines to hide loading
                       Navigator.push(
                         context,

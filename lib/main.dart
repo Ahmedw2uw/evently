@@ -1,8 +1,9 @@
+import 'dart:async';
+import 'dart:core';
+
 import 'package:evently/ui/provider/language_provider.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/screens/login/login.dart';
-import 'package:evently/ui/screens/regester/regester.dart';
-import 'package:evently/ui/screens/splash/splash.dart';
 import 'package:evently/ui/utiliti/app_theem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,8 +12,15 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// import 'l10n/app_localizations.dart';
+  // StreamController<int> streamController=StreamController(); //* this to maik stream that return list of stream of integer
+  // Stream integerStream=streamController.stream;//* this to assign the values in the integerStream 
+  
 void main() async {
+ for(int i=1;i<=10;i++){
+  // Future.delayed(Duration(seconds: 1),(){streamController.add(i);});//* this its the stream obgect
+  
+ }
+
   WidgetsFlutterBinding.ensureInitialized(); //* this til to flutter before create the app initilaze some thing
   await Firebase.initializeApp(
     //*to initalize app in firebase

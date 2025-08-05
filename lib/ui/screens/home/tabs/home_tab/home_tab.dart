@@ -1,8 +1,9 @@
+import 'package:evently/data/firestore_helpers.dart';
 import 'package:evently/models/categort_dm.dart';
 import 'package:evently/models/event_dm.dart';
+import 'package:evently/models/user_dm.dart';
 import 'package:evently/ui/custom_widgets/category_tabs.dart';
 import 'package:evently/ui/custom_widgets/event_widget.dart';
-import 'package:evently/ui/utiliti/app_assets.dart';
 import 'package:evently/ui/utiliti/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -14,97 +15,120 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  CategorytDm selectedCategory = CategorytDm.homeCategories[0];
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [bildHeader(), Expanded(child: bildEventsList())]);
+    return Column(
+      children: [buildHeader(), Expanded(child: buildEventsList())],
+    );
   }
 
-  Widget bildHeader() {
+  Widget buildHeader() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.purple,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),
         ),
       ),
-
       child: Column(
-        children: [bildUserInfo(), SizedBox(height: 10), bildCategoresTabs()],
+        children: [
+          buildUserInfo(),
+          const SizedBox(height: 10),
+          buildCategoryTabs(),
+        ],
       ),
     );
   }
 
-  Widget bildUserInfo() => Column(
+  Widget buildUserInfo() => Row(
     children: [
-      Row(
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Text(
+            "Welcome Back ✨ ",
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            UserDm.curentUser!.name,
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Row(
             children: [
+              const Icon(Icons.location_on, color: AppColors.white),
               Text(
-                "Welcome Back ✨",
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                "  EtayElbarod , Egypt  ",
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
                 ),
-              ),
-              Text(
-                "Ahmed Ashraf Elraiy",
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.location_on, color: AppColors.white),
-                  Text(
-                    "  EtayElbarod , Egept  ",
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
-          Spacer(),
-          Icon(Icons.light_mode, color: AppColors.white),
-          SizedBox(width: 10),
-          Icon(Icons.language, color: AppColors.white),
         ],
       ),
+      const Spacer(),
+      const Icon(Icons.light_mode, color: AppColors.white),
+      const SizedBox(width: 10),
+      const Icon(Icons.language, color: AppColors.white),
     ],
   );
 
-  bildCategoresTabs() => Container(
-    child: CategoryTabs(
+  Widget buildCategoryTabs() {
+    return CategoryTabs(
       onTabSelected: (category) {
+        selectedCategory = category;
+        setState(() {});
       },
-      categories: CategorytDm.homeCategories, //* this to display the categories
+      categories: CategorytDm.homeCategories,
       selectedTabBg: AppColors.white,
       unSelectedTabBg: Colors.transparent,
       selectedTabTextColor: AppColors.babyBlue,
       unselectedTabTextColor: Colors.white,
-    ),
-  );
-  bildEventsList() => ListView.builder(
-    itemCount: 4,
-    itemBuilder:
-        (context, index) => EventWidget(
-          eventDm: EventDm(
-            title: "this is perth day",
-            date: "21\nnov",
-            image: AppAssets.minLogo,
-            isFavorate: false,
-            description: "description",
-            lat: 0,
-            long: 0,
-            time: "time",
-          ),
-        ),
-  );
+    );
+  }
+
+  Widget buildEventsList() {
+    return StreamBuilder<List<EventDm>>(
+      stream: getAllEventsFromFirestore(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text("No events available."));
+        }
+
+        var events = snapshot.data!;
+        if (selectedCategory.title != "All") {
+          events =
+              events
+                  .where(
+                    (event) =>
+                        event.category.toLowerCase() ==
+                        selectedCategory.title.toLowerCase(),
+                  )
+                  .toList();
+        }
+
+        return ListView.builder(
+          itemCount: events.length,
+          itemBuilder: (context, index) {
+            return EventWidget(eventDm: events[index]);
+          },
+        );
+      },
+    );
+  }
 }

@@ -23,7 +23,7 @@ class CustomButtom extends StatelessWidget {
       onPressed: onClick,
       style: ElevatedButton.styleFrom(),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
 
         children: [
           if (ic != null) ...[
@@ -31,14 +31,17 @@ class CustomButtom extends StatelessWidget {
             const SizedBox(width: 8),
           ],
           Flexible(
-            child: Text(
-              text,
-              
-              style: Theme.of(
-                context,
-              ).textTheme.labelLarge?.copyWith(inherit: true, color: textColor),
-              overflow: TextOverflow.ellipsis,
-              softWrap: false,
+            child: Center(
+              child: Text(
+                text,
+
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  inherit: true,
+                  color: textColor,
+                ),
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+              ),
             ),
           ),
         ],
